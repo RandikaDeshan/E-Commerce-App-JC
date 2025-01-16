@@ -1,5 +1,6 @@
 package com.example.ecommerceapp
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,11 +43,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.ecommerceapp.presentation.ProductsViewModel
+import com.google.gson.Gson
 
 @Composable
-fun Home(navController: NavController, authViewModel: AuthService,productsViewModel: ProductsViewModel) {
+fun Home(navController: NavController, authViewModel: AuthService,productsViewModel: ProductsViewModel = viewModel()) {
 
     val authState = authViewModel.authState.observeAsState()
     val products by productsViewModel.products.collectAsState()
@@ -216,7 +219,8 @@ fun Home(navController: NavController, authViewModel: AuthService,productsViewMo
                     ) {
                         items(products) { product ->
                             ProductCard(product = product, onClick = {
-                                navController.navigate("product_detail/${product.id}")
+                                val productJson = Uri.encode(Gson().toJson(product))
+                                navController.navigate("product_detail/$productJson")
                             })
                         }
                     }

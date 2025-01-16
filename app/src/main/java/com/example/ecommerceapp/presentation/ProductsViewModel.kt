@@ -6,6 +6,7 @@ import com.example.ecommerceapp.data.Repo
 import com.example.ecommerceapp.data.model.ProductItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
@@ -16,7 +17,7 @@ class ProductsViewModel: ViewModel() {
     val products : StateFlow<List<ProductItem>> = _products
 
     private val _selectedProduct = MutableStateFlow<ProductItem?>(null)
-    val selectedProduct: StateFlow<ProductItem?> = _selectedProduct
+    val selectedProduct: StateFlow<ProductItem?> = _selectedProduct.asStateFlow()
 
     private val _categories = MutableStateFlow<List<String>>(emptyList())
     val categories: StateFlow<List<String>> = _categories
@@ -60,9 +61,12 @@ class ProductsViewModel: ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _selectedProduct.value = repo.getProductById(id)
+                val product = repo.getProductById(id)
+                _selectedProduct.value = product
+                println(product)
+                println(_selectedProduct.value)
             } catch (e: Exception) {
-                // Handle error
+                println("Error : $e")
             } finally {
                 _isLoading.value = false
             }

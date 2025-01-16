@@ -100,7 +100,7 @@ fun NavigationPage(authViewModel: AuthService){
             ProductDetails(
                 navController = navController,
                 productsViewModel = ProductsViewModel(),
-                productId = productId?.toIntOrNull()
+                productId = productId.toString()
                 )
         }
     }
