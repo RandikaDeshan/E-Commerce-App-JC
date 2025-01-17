@@ -103,6 +103,9 @@ fun NavigationPage(authViewModel: AuthService){
                 productId = productId.toString()
                 )
         }
+        composable("cart_page") {
+            CartPage(navController)
+        }
     }
 }
 
