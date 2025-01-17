@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -42,11 +43,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.example.ecommerceapp.presentation.CartViewModel
 import com.example.ecommerceapp.presentation.ProductsViewModel
 import com.example.ecommerceapp.ui.theme.ECommerceAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val stateViewModel = ViewModelProvider(this)[CartViewModel::class.java]
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -56,16 +59,18 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                      NavigationPage(
-                        authViewModel = AuthService()
+                        authViewModel = AuthService(),
+                         stateViewModel
                      )               }
             }
         }
     }
 }
 @Composable
-fun NavigationPage(authViewModel: AuthService){
+fun NavigationPage(authViewModel: AuthService,stateViewModel:CartViewModel){
     val navController = rememberNavController()
     val authState = authViewModel.authState.observeAsState()
+
 
     LaunchedEffect(authState.value) {
         when(authState.value){
@@ -100,11 +105,12 @@ fun NavigationPage(authViewModel: AuthService){
             ProductDetails(
                 navController = navController,
                 productsViewModel = ProductsViewModel(),
-                productId = productId.toString()
+                productId = productId.toString(),
+                cartViewModel = stateViewModel
                 )
         }
         composable("cart_page") {
-            CartPage(navController)
+            CartPage(navController, cartViewModel = stateViewModel)
         }
     }
 }

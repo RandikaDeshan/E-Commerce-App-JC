@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -19,16 +18,15 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.ShoppingBag
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,27 +38,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.ecommerceapp.data.model.CartProduct
 import com.example.ecommerceapp.data.model.ProductItem
+import com.example.ecommerceapp.presentation.CartViewModel
 import com.example.ecommerceapp.presentation.ProductsViewModel
 import com.google.gson.Gson
-import okhttp3.internal.wait
+import kotlin.math.round
 
 @Composable
 fun ProductDetails(
     navController: NavController,
     productsViewModel: ProductsViewModel,
-    productId: String
+    productId: String,
+    cartViewModel: CartViewModel
 ){
 
     val item = Gson().fromJson(productId,ProductItem::class.java)
-    val product by productsViewModel.selectedProduct.collectAsState()
-    val isLoading by productsViewModel.isLoading.collectAsState()
 
     val sizes = listOf("S","M","L","XL","XXL")
 
@@ -72,16 +69,16 @@ fun ProductDetails(
         mutableStateOf(1)
     }
 
-    var title by remember {
-        mutableStateOf("")
-    }
-
 
     Column(
-        modifier = Modifier.fillMaxSize().background(Color.LightGray)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 69.dp, bottom = 25.dp, end = 30.dp, start = 30.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 69.dp, bottom = 25.dp, end = 30.dp, start = 30.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
@@ -110,14 +107,21 @@ fun ProductDetails(
             )
         }
         Column(
-            modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)).background(Color.White).padding(start = 30.dp, end = 30.dp).verticalScroll(
-                rememberScrollState()
-            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp))
+                .background(Color.White)
+                .padding(start = 30.dp, end = 30.dp)
+                .verticalScroll(
+                    rememberScrollState()
+                ),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding( top = 25.dp, bottom = 28.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 25.dp, bottom = 28.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -132,7 +136,27 @@ fun ProductDetails(
                             text = item.title.substring(startIndex = 0, endIndex = 10),
                             fontSize = 24.sp,
                             fontWeight = FontWeight(900),
+                            modifier = Modifier.padding(bottom = 10.dp)
                         )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            for(i in 1 until  6){
+                                Icon(
+                                    imageVector = Icons.Default.Star,
+                                    contentDescription = "",
+                                    modifier = Modifier.size(14.dp),
+                                    tint = if(i<= round(item.rating.rate)){Color.Yellow}else{Color.Gray}
+                                )
+                        }
+                            Text(
+                                text = "( ${item.rating.rate.toString()} )",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight(400),
+                                color = Color.Gray,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        }
 
                     }
                     Text(
@@ -142,7 +166,9 @@ fun ProductDetails(
                     )
                 }
                 Row (
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 26.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 26.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -214,8 +240,17 @@ fun ProductDetails(
                 }
             }
             Button(
-                modifier = Modifier.fillMaxWidth().padding(top = 65.dp, bottom = 20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 65.dp, bottom = 20.dp),
                 onClick = {
+                     cartViewModel.addToCart(CartProduct(
+                         id = item.id,
+                         quantity = count,
+                         name = item.title,
+                         image = item.image,
+                         price = item.price
+                     ),count)
                     navController.navigate("cart_page")
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -250,7 +285,11 @@ fun SizeButton(buttonSize : String, title : String, onClicked : (String)->Unit){
         modifier = Modifier.padding(end = 10.dp)
     ){
         Box(
-            modifier = Modifier.size(width = 48.dp, height = 48.dp).clip(RoundedCornerShape(6)).background(bgColor).clickable(onClick = {onClicked(buttonSize)}),
+            modifier = Modifier
+                .size(width = 48.dp, height = 48.dp)
+                .clip(RoundedCornerShape(6))
+                .background(bgColor)
+                .clickable(onClick = { onClicked(buttonSize) }),
             contentAlignment = Alignment.Center
         ){
             Text(

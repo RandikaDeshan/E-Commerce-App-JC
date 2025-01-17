@@ -1,30 +1,27 @@
 package com.example.ecommerceapp.presentation
 
+import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.ecommerceapp.data.model.CartProduct
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+
 
 class CartViewModel : ViewModel() {
-    private val _cartItems = MutableStateFlow<List<CartProduct>>(emptyList())
-    val cartItems = _cartItems.asStateFlow()
+    private val _cartItems = MutableLiveData<List<CartProduct>>()
+    val cartItems : LiveData<List<CartProduct>> = _cartItems
 
-    private val _totalPrice = MutableStateFlow(0.0)
-    val totalPrice = _totalPrice.asStateFlow()
+    private val _totalPrice = MutableLiveData(0.0)
+    val totalPrice : LiveData<Double> = _totalPrice
 
-    fun addToCart(product: CartProduct) {
-        val currentItems = _cartItems.value.toMutableList()
+    fun addToCart(product: CartProduct,count:Int) {
+        val currentItems = _cartItems.value?.toMutableList() ?: mutableListOf()
         val existingItem = currentItems.find { it.id == product.id }
 
         if(existingItem != null){
             val updatedItems = currentItems.map { item ->
                 if(item.id == product.id){
-                    item.copy(quantity = item.quantity + 1)
+                    item.copy(quantity = item.quantity + count)
                 }else{
                     item
                 }
@@ -36,16 +33,19 @@ class CartViewModel : ViewModel() {
                 name = product.name,
                 price = product.price,
                 image = product.image,
-                quantity = 1
+                quantity = count
             )
             currentItems.add(newItem)
+            println(newItem)
             _cartItems.value = currentItems
+            println(_cartItems.value)
         }
         calculateTotal()
     }
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun incrementQuantity(itemId: Int) {
-        val updatedItems = _cartItems.value.map { item ->
+        val updatedItems = _cartItems.value?.map { item ->
             if (item.id == itemId) {
                 item.copy(quantity = item.quantity + 1)
             } else {
@@ -56,11 +56,13 @@ class CartViewModel : ViewModel() {
         calculateTotal()
     }
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun decrementQuantity(itemId: Int) {
-        val updatedItems = _cartItems.value.map { item ->
+        val updatedItems = _cartItems.value?.map { item ->
             if (item.id == itemId && item.quantity > 1) {
                 item.copy(quantity = item.quantity - 1)
-            } else {
+            }
+            else {
                 item
             }
         }
@@ -69,22 +71,17 @@ class CartViewModel : ViewModel() {
     }
 
     fun removeItem(itemId: Int) {
-        _cartItems.value = _cartItems.value.filter { it.id != itemId }
+        _cartItems.value = _cartItems.value?.filter { it.id != itemId }
         calculateTotal()
     }
 
     private fun calculateTotal() {
-        _totalPrice.value = _cartItems.value.sumOf { it.price * it.quantity }
+        val currentItems = _cartItems.value ?: emptyList() // Safely handle null
+        _totalPrice.value = currentItems.sumOf { cartProduct ->
+            cartProduct.price * cartProduct.quantity
+        }
     }
 
-    // Optional: Get cart item count for badge
-    val cartItemCount: StateFlow<Int> = _cartItems.map { items ->
-        items.sumOf { it.quantity }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        0
-    )
 
 
 }

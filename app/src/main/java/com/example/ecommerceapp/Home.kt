@@ -19,6 +19,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.ViewList
+import androidx.compose.material.icons.outlined.ShoppingBag
+import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -113,15 +115,27 @@ fun Home(navController: NavController, authViewModel: AuthService,productsViewMo
                     fontSize = 24.sp,
                     fontWeight = FontWeight(900),
                 )
-                IconButton(
-                    onClick = { authViewModel.logout()}
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ExitToApp,
-                        contentDescription = "LogOut",
-                        tint = Color.Black
-                    )
+                Row {
+                    IconButton(
+                        onClick = { authViewModel.logout()}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ExitToApp,
+                            contentDescription = "LogOut",
+                            tint = Color.Black
+                        )
+                    }
+                    IconButton(
+                        onClick = { navController.navigate("cart_page")}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.ShoppingBag,
+                            contentDescription = "LogOut",
+                            tint = Color.Black
+                        )
+                    }
                 }
+
             }
             ScrollableTabRow(
                 modifier = Modifier.padding(top = 59.dp),
