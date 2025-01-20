@@ -1,5 +1,6 @@
 package com.example.ecommerceapp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,8 +33,8 @@ fun SecondPage(navController: NavController) {
     Box(
         modifier = Modifier.fillMaxSize().background(Color.White)
     ){
-        AsyncImage(
-            model = "https://s3-alpha-sig.figma.com/img/a215/f454/f0f02e1481620de7743e7df186bd0b9a?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hIig50ybxal4elxQtzH6PJ9UAg3iyZa0kwLfi5IU7DHqvnNyrnZBVbZVb3AZX8t3SEGvuI85~L-t2LGIJfBf5UKZUqxeNMDztw3kuJS15iP4xSEKwEJAh154eiEOBYl8yTOzA8BaUVfjPJU0~dJBgoGYwR2GWyzv6fyaZx7BSzQAiMqmvJfULKboKgVmDAjBWBEKORRrD5A3sU5d6ZbujvVe~SMO6Y4cRGHAml6vxLD9A8MXXX0jLJcY~NndlNeDb8dW1x~TdJaxZgeJTVBJUJcVrWPhbSL-1THZesao9rZ8HBiZSPE4BMAatWoKoFhYzyFjo3uVuSIOcD~Z~QpVbw__",
+        Image(
+            painter = painterResource(R.drawable.second),
             contentDescription = "Splash Screen",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillHeight,

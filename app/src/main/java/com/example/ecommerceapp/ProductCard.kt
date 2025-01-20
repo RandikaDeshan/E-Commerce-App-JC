@@ -38,6 +38,9 @@ fun ProductCard(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
+            colors = CardDefaults.cardColors(
+                containerColor = Color.Gray
+            ),
             shape = RoundedCornerShape(30.dp),
             modifier = Modifier
                 .fillMaxWidth().height(208.dp).clickable(onClick = onClick),
@@ -66,6 +69,7 @@ fun ProductCard(
 
         Text(
             text = product.title,
+            color = Color.Black,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight(900),

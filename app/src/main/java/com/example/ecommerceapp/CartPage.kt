@@ -27,6 +27,7 @@ import androidx.compose.material.icons.outlined.ShoppingBag
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -59,7 +60,7 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
 
     println(cartItem)
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(Color.White)
     ){
         LazyColumn (
             modifier = Modifier.fillMaxSize().padding(top = 120.dp, bottom = 100.dp),
@@ -96,13 +97,15 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = Color.Black
                     )
                 }
                 Text(
                     text = "My Cart",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight(900)
+                    fontWeight = FontWeight(900),
+                    color = Color.Black
                 )
                 Text(
                     text = "  "
@@ -115,7 +118,7 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
                     navController.navigate("payment_page")}else{
                         Toast.makeText(context,"Cart is empty",Toast.LENGTH_SHORT).show()
                     }},
-                modifier = Modifier.fillMaxWidth().padding(bottom = 30.dp),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
             ) {
                 Row(
@@ -123,10 +126,12 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Logout,
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = Color.White
                     )
                     Text(
                         text =  "GO TO CHECKOUT",
+                        color = Color.White,
                         fontSize = 11.sp,
                         fontWeight = FontWeight(900),
                         modifier = Modifier.padding(start = 20.dp, end = 20.dp)
@@ -134,6 +139,7 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
                     Text(
                         text =  "\$${totalPrice.toFloat()}%",
                         fontSize = 11.sp,
+                        color = Color.White,
                         fontWeight = FontWeight(900),
                         modifier = Modifier.clip(RoundedCornerShape(4.dp)).background(Color.DarkGray).padding(vertical = 3.dp, horizontal = 5.dp)
                     )
@@ -156,6 +162,9 @@ fun CartItem(
     remove : () -> Unit ={},
 ){
     Card (
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFA1A1A1)
+        ),
         modifier = Modifier.fillMaxWidth().height(150.dp).padding(vertical = 10.dp, horizontal = 30.dp)
     ){
         Row(
@@ -179,12 +188,13 @@ fun CartItem(
                     text = "Geeta Collection",
                     fontSize = 9.sp,
                     fontWeight = FontWeight(700),
-                    color = Color.Gray
+                    color = Color.DarkGray
                 )
                 Text(
                     text = "\$$price",
                     fontSize = 14.sp,
                     fontWeight = FontWeight(900),
+                    color = Color.Black
                 )
             }
             Column(
@@ -198,7 +208,7 @@ fun CartItem(
                         imageVector = Icons.Default.Close,
                         contentDescription = "",
                         modifier = Modifier.size(11.dp),
-                        tint = Color.Gray
+                        tint = Color.DarkGray
                     )
                 }
                 Row(
@@ -210,13 +220,15 @@ fun CartItem(
                         Icon(
                             imageVector = Icons.Default.Remove,
                             contentDescription = "",
-                            modifier = Modifier.size(9.dp)
+                            modifier = Modifier.size(9.dp),
+                            tint = Color.Black
                         )
                     }
                     Text(
                         text = quantity.toString() ,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight(900)
+                        fontWeight = FontWeight(900),
+                        color = Color.Black
                     )
                     IconButton(
                         onClick = addItem
@@ -224,7 +236,8 @@ fun CartItem(
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = "",
-                            modifier = Modifier.size(9.dp)
+                            modifier = Modifier.size(9.dp),
+                            tint = Color.Black
                         )
                     }
                 }

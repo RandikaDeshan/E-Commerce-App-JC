@@ -1,5 +1,6 @@
 package com.example.ecommerceapp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,8 +31,8 @@ fun SplashPage(navController: NavController) {
     Box (
         modifier = Modifier.fillMaxSize()
     ){
-        AsyncImage(
-            model = "https://s3-alpha-sig.figma.com/img/c12d/6b4c/e30595d05b3f5509eace87d2e161fa10?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=q4g7wTITU7y76xpQZ~bgmfFFmeTeLcE-bF8hO4nM~oTyR-sbGNgnwxxmTh895p1OANJb2Fotchwr6UoJhAbumAtwz9W1K7aGjku6b8dcLpP1hNr~Y-OqQOlU8IKt5OevY59GT-F-0jf1qYNyR-FYf9VJOIVb9LhtKCEFhlG4SuDRUQBHO0YNpOu~plsAGglIeuPIot~gEGWh67ts~-Csebjq8VWAcl6AqPSgWCIJzggdlth~3l8w6QpdotFuGa6NH6MtDzqCz4lZPTNgW7B5VVhYuFWgAEHixXKZqYVmlwIfNPs9d1mAGCGRMDBxWBWDbybSM9dVHDxczIkQZl0hBw__",
+        Image(
+            painter = painterResource(id = R.drawable.main),
             contentDescription = "Splash Screen",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillHeight

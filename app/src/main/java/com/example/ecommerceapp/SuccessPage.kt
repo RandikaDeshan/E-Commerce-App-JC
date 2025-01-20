@@ -46,11 +46,12 @@ fun SuccessPage(navController: NavController){
     ) {
         IconButton(
             onClick = {navController.popBackStack()},
-            modifier = Modifier.padding(top = 30.dp)
+            modifier = Modifier.padding(top = 50.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
-                contentDescription = ""
+                contentDescription = "",
+                tint = Color.Black
             )
         }
         Box(
@@ -75,7 +76,8 @@ fun SuccessPage(navController: NavController){
             text = "Congrats! Your Order has been placed",
             fontSize = 24.sp,
             fontWeight = FontWeight(900),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = Color.Black
         )
         Spacer(Modifier.padding(20.dp))
         Text(
@@ -98,13 +100,15 @@ fun SuccessPage(navController: NavController){
             ) {
                 Icon(
                     imageVector = Icons.Outlined.DeliveryDining,
-                    contentDescription = ""
+                    contentDescription = "",
+                    tint = Color.White
                 )
                 Spacer(Modifier.padding(20.dp))
                 Text(
                     text = "TRACK ORDER",
                     fontSize = 11.sp,
-                    fontWeight = FontWeight(900)
+                    fontWeight = FontWeight(900),
+                    color = Color.White
                 )
             }
         }
@@ -120,11 +124,12 @@ fun SuccessPage(navController: NavController){
                 Text(
                     text = "CONTINUE SHOPPING",
                     fontSize = 11.sp,
-                    fontWeight = FontWeight(900)
+                    fontWeight = FontWeight(900),
+                    color = Color.White
                 )
             }
         Row (
-            modifier = Modifier.fillMaxWidth().padding(top = 19.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 19.dp, bottom = 50.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ){
@@ -133,13 +138,15 @@ fun SuccessPage(navController: NavController){
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = ""
+                    contentDescription = "",
+                    tint = Color.Black
                 )
             }
             Text(
                 text = "Back to home",
                 fontSize = 12.sp,
-                fontWeight = FontWeight(900)
+                fontWeight = FontWeight(900),
+                color = Color.Black
             )
         }
     }

@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -63,7 +66,9 @@ fun SignUpPage(navController: NavController,authViewModel: AuthService) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().background(Color.White).padding(start = 30.dp, end = 30.dp),
+        modifier = Modifier.fillMaxSize().background(Color.White).padding(start = 30.dp, end = 30.dp).verticalScroll(
+            rememberScrollState()
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -83,6 +88,9 @@ fun SignUpPage(navController: NavController,authViewModel: AuthService) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = email,
+            textStyle = TextStyle(
+                color = Color.Black
+            ),
             onValueChange = {
                 email = it
             },
@@ -101,6 +109,9 @@ fun SignUpPage(navController: NavController,authViewModel: AuthService) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
             value = password,
+            textStyle = TextStyle(
+                color = Color.Black
+            ),
             onValueChange = {
                 password = it
             },
@@ -121,6 +132,9 @@ fun SignUpPage(navController: NavController,authViewModel: AuthService) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth().padding(top = 20.dp, bottom = 20.dp),
             value = confirmPassword,
+            textStyle = TextStyle(
+                color = Color.Black
+            ),
             onValueChange = {
                 confirmPassword = it
             },

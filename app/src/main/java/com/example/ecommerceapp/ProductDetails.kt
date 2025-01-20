@@ -90,7 +90,8 @@ fun ProductDetails(
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back"
+                    contentDescription = "Back",
+                    tint = Color.Black
                 )
             }
             AsyncImage(
@@ -129,12 +130,14 @@ fun ProductDetails(
                         Text(
                             text = if(item.category == "men's clothing"){"Geeta Mens"}else if(item.category == "jewelery"){"Geeta Jewelery"}else if(item.category == "electronics"){"Geeta Electronics"}else{"Geeta Womens"},
                             fontSize = 13.sp,
+                            color = Color.Black,
                             fontWeight = FontWeight(400)
                         )
 
                         Text(
                             text = item.title.substring(startIndex = 0, endIndex = 10),
                             fontSize = 24.sp,
+                            color = Color.Black,
                             fontWeight = FontWeight(900),
                             modifier = Modifier.padding(bottom = 10.dp)
                         )
@@ -162,6 +165,7 @@ fun ProductDetails(
                     Text(
                         text = "\$${item.price} USD",
                         fontSize = 20.sp,
+                        color = Color.Black,
                         fontWeight = FontWeight(900)
                     )
                 }
@@ -185,12 +189,14 @@ fun ProductDetails(
                             Icon(
                                 imageVector = Icons.Default.Remove,
                                 contentDescription = "",
+                                tint = Color.Black,
                                 modifier = Modifier.size(9.dp)
                             )
                         }
                         Text(
                             text = count.toString(),
                             fontSize = 18.sp,
+                            color = Color.Black,
                             fontWeight = FontWeight(900)
                         )
                         IconButton(
@@ -201,29 +207,34 @@ fun ProductDetails(
                             Icon(
                                 imageVector = Icons.Default.Add,
                                 contentDescription = "",
+                                tint = Color.Black,
                                 modifier = Modifier.size(9.dp)
                             )
                         }
                     }
                     Icon(
                         imageVector = Icons.Default.Logout,
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = Color.Black
                     )
                 }
                 Text(
                     text = "DESCRIPTION",
                     fontSize = 10.sp,
+                    color = Color.Black,
                     fontWeight = FontWeight(800)
                 )
                 Text(
                     text = item.description,
                     fontSize = 12.sp,
+                    color = Color.DarkGray,
                     fontWeight = FontWeight(500),
                 )
 
                 Text(
                     text = "SELECT SIZE",
                     fontSize = 10.sp,
+                    color = Color.Black,
                     fontWeight = FontWeight(800),
                     modifier = Modifier.padding(top = 30.dp)
                 )
@@ -242,7 +253,7 @@ fun ProductDetails(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 65.dp, bottom = 20.dp),
+                    .padding(top = 65.dp, bottom = 40.dp),
                 onClick = {
                      cartViewModel.addToCart(CartProduct(
                          id = item.id,
@@ -262,11 +273,13 @@ fun ProductDetails(
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.ShoppingBag,
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = Color.White
                     )
                     Text(
                         text =  "ADD TO Cart",
                         fontSize = 11.sp,
+                        color = Color.White,
                         fontWeight = FontWeight(900),
                         modifier = Modifier.padding(start = 20.dp)
                     )

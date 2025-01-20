@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +63,7 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
     }
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize().background(Color.White)
             .padding(30.dp).verticalScroll(rememberScrollState()),
     ) {
         Row(
@@ -75,11 +76,15 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = ""
+                    contentDescription = "",
+                    tint = Color.Black
                 )
             }
             Text(
-                text = "Credit / Debit card"
+                text = "Credit / Debit card",
+                color = Color.Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight(900),
             )
             Text(
                 text = "  "
@@ -104,11 +109,15 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
             text = "Name on card",
             fontSize = 14.sp,
             fontWeight = FontWeight(900),
+            color = Color.Black,
             modifier = Modifier.padding(bottom = 13.dp)
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
             value = name,
+            textStyle = TextStyle(
+                color = Color.Black,
+            ),
             onValueChange = {
                 name = it
             },
@@ -116,6 +125,7 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
         )
         Text(
             text = "Card number",
+            color = Color.Black,
             fontSize = 14.sp,
             fontWeight = FontWeight(900),
             modifier = Modifier.padding(bottom = 13.dp)
@@ -123,6 +133,9 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
             value = cardnumber,
+            textStyle = TextStyle(
+                color = Color.Black,
+            ),
             onValueChange = {
                 cardnumber = it
             },
@@ -143,6 +156,7 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
             ) {
                 Text(
                     text = "Expiry date",
+                    color = Color.Black,
                     fontSize = 14.sp,
                     fontWeight = FontWeight(900),
                     modifier = Modifier.padding(bottom = 13.dp)
@@ -150,6 +164,9 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = date,
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                    ),
                     onValueChange = {
                         date = it
                     },
@@ -162,6 +179,7 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
             ) {
                 Text(
                     text = "CVC",
+                    color = Color.Black,
                     fontSize = 14.sp,
                     fontWeight = FontWeight(900),
                     modifier = Modifier.padding(bottom = 13.dp)
@@ -169,6 +187,9 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = cvc,
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                    ),
                     onValueChange = {
                         cvc = it
                     },
@@ -194,8 +215,10 @@ fun PaymentScreen(viewModel: StripeViewModel,navController: NavController){
             Text(
                 text = "USE THIS CARD",
                 fontSize = 11.sp,
-                fontWeight = FontWeight(900)
+                fontWeight = FontWeight(900),
+                color = Color.White
             )
         }
+        Spacer(Modifier.padding(30.dp))
     }
 }
