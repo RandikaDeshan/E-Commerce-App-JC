@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -45,12 +46,15 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.ecommerceapp.presentation.CartViewModel
 import com.example.ecommerceapp.presentation.ProductsViewModel
+import com.example.ecommerceapp.presentation.StripeViewModel
 import com.example.ecommerceapp.ui.theme.ECommerceAppTheme
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: StripeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         val stateViewModel = ViewModelProvider(this)[CartViewModel::class.java]
         super.onCreate(savedInstanceState)
+        viewModel.initializePaymentLauncher(this)
         enableEdgeToEdge()
         setContent {
             ECommerceAppTheme {
@@ -60,14 +64,15 @@ class MainActivity : ComponentActivity() {
                 ) {
                      NavigationPage(
                         authViewModel = AuthService(),
-                         stateViewModel
+                         stateViewModel,
+                         viewModel
                      )               }
             }
         }
     }
 }
 @Composable
-fun NavigationPage(authViewModel: AuthService,stateViewModel:CartViewModel){
+fun NavigationPage(authViewModel: AuthService,stateViewModel:CartViewModel,paymentViewModel: StripeViewModel){
     val navController = rememberNavController()
     val authState = authViewModel.authState.observeAsState()
 
@@ -111,6 +116,12 @@ fun NavigationPage(authViewModel: AuthService,stateViewModel:CartViewModel){
         }
         composable("cart_page") {
             CartPage(navController, cartViewModel = stateViewModel)
+        }
+        composable("payment_page") {
+            PaymentScreen(paymentViewModel,navController)
+        }
+        composable("success_page") {
+            SuccessPage(navController)
         }
     }
 }

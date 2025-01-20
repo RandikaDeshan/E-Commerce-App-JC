@@ -1,6 +1,8 @@
 package com.example.ecommerceapp
 
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +55,7 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
 
     val cartItem by cartViewModel.cartItems.observeAsState(emptyList())
     val totalPrice by cartViewModel.totalPrice.observeAsState(0.0)
-
+    val context = LocalContext.current
 
     println(cartItem)
     Box(
@@ -70,7 +73,7 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
                         quantity = item.quantity,
                         removeItem ={cartViewModel.decrementQuantity(item.id)},
                         addItem = {cartViewModel.incrementQuantity(item.id)},
-                        remove = {cartViewModel.removeItem(item.id)}
+                        remove = {cartViewModel.removeItem(item.id)},
                     )
                     }
                 )
@@ -107,7 +110,11 @@ fun CartPage(navController: NavController,cartViewModel: CartViewModel){
             }
 
             Button(
-                onClick = {},
+                onClick = {
+                    if(totalPrice.toString() != "0.0"){
+                    navController.navigate("payment_page")}else{
+                        Toast.makeText(context,"Cart is empty",Toast.LENGTH_SHORT).show()
+                    }},
                 modifier = Modifier.fillMaxWidth().padding(bottom = 30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
             ) {
@@ -146,7 +153,7 @@ fun CartItem(
     quantity : Int,
     addItem : () -> Unit ={},
     removeItem : () -> Unit ={},
-    remove : () -> Unit ={}
+    remove : () -> Unit ={},
 ){
     Card (
         modifier = Modifier.fillMaxWidth().height(150.dp).padding(vertical = 10.dp, horizontal = 30.dp)
