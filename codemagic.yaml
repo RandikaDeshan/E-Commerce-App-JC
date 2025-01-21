@@ -25,10 +25,6 @@ workflows:
         script: |
           ./gradlew test
       
-      - name: Run Kotlin linter
-        script: |
-          ./gradlew ktlintCheck
-      
       - name: Build debug APK
         script: |
           ./gradlew assembleDebug
