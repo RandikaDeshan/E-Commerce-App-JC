@@ -1,20 +1,24 @@
 workflows:
-  flutter-workflow:
-    name: Flutter Workflow
+  kotlin_ci_cd:
+    name: Kotlin CI/CD Pipeline
     environment:
-      flutter: stable
       vars:
-        BUILD_MODE: release
+        GRADLE_CACHE: "true"
+      android:
+        ndk: latest
     scripts:
-      - name: Install dependencies
-        script: flutter pub get
-      - name: Run tests
-        script: flutter test
-      - name: Build APK
-        script: flutter build apk --release
-      - name: Build AppBundle
-        script: flutter build appbundle --release
+      # Install dependencies
+      - echo "Installing dependencies..."
+      - ./gradlew dependencies
+      # Build the app
+      - echo "Building the app..."
+      - ./gradlew assembleRelease
+      # Run unit tests
+      - echo "Running tests..."
+      - ./gradlew test
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
-      - build/app/outputs/bundle/release/app-release.aab
-    
+      - build/outputs/**/*.apk
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_CREDENTIALS
+        track: internal
