@@ -5,12 +5,17 @@ workflows:
     environment:
       
       vars:
-        JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+        JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64 # Change to Java 17
+        
       
     scripts:
       - name: Set up local.properties
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+
+      - name: Clean Gradle cache
+        script: |
+          ./gradlew clean
       
       - name: Install dependencies
         script: |
