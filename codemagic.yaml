@@ -5,7 +5,7 @@ workflows:
     environment:
       
       vars:
-        JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64 # Change to Java 17
+        JAVA_HOME: $CM_JAVA_HOME
         
       
     scripts:
