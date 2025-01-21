@@ -3,8 +3,7 @@ workflows:
   android-workflow:
     name: Android Pipeline
     environment:
-      android_signing:
-        - keystore_reference
+      
       vars:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk
       
