@@ -5,7 +5,7 @@ workflows:
     environment:
       
       vars:
-        JAVA_HOME: $CM_JAVA_HOME
+        JAVA_HOME: /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
         
       
     scripts:
