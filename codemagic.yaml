@@ -5,7 +5,7 @@ workflows:
     environment:
       
       vars:
-        JAVA_HOME: /usr/lib/jvm/java-11-openjdk
+        JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
       
     scripts:
       - name: Set up local.properties
